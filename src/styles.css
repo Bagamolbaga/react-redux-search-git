@@ -1,0 +1,19 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.search-container{
+  width: 1000px;
+  display: flex;
+  margin-top: 30px;
+}
+
+.search{
+  text-decoration: none;
+  color: #fff;
+}
+
+.current-page{
+  color: rgb(231, 33, 33);
+}
