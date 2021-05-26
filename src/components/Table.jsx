@@ -10,8 +10,12 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button'
 
+import {addFavorites, deleteFavorites} from '../redux/actions'
+import {useDispatch} from 'react-redux'
+
 const MyTable = ({data, favorites}) => {
-  let {addFavoriteHandler, deleteFavoriteHandler} = useContext(Context)
+  let dispatch = useDispatch()
+
 
   let Fav = () => {
     return(
@@ -35,7 +39,7 @@ const MyTable = ({data, favorites}) => {
                   <TableCell align="center">{row.author}</TableCell>
                   <TableCell align="center">{row.stars}</TableCell>
                   <TableCell align="center"><a href={row.link}>{row.link}</a></TableCell>
-                  <TableCell align="center"><Button size='small' variant="contained" color="secondary" onClick={()=>deleteFavoriteHandler(row.fullName)}>Delete</Button></TableCell>
+                  <TableCell align="center"><Button size='small' variant="contained" color="secondary" onClick={()=>dispatch(deleteFavorites(row.fullName))}>Delete</Button></TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -66,7 +70,7 @@ const MyTable = ({data, favorites}) => {
                   <TableCell align="center">{row.author}</TableCell>
                   <TableCell align="center">{row.stars}</TableCell>
                   <TableCell align="center"><a href={row.link}>{row.link}</a></TableCell>
-                  <TableCell align="center"><Button size='small' variant="contained" color="primary" onClick={()=>addFavoriteHandler(row)}>Add to fovorite</Button></TableCell>
+                  <TableCell align="center"><Button size='small' variant="contained" color="primary" onClick={()=>dispatch(addFavorites(row))}>Add to fovorite</Button></TableCell>
                 </TableRow>
               ))}
             </TableBody>

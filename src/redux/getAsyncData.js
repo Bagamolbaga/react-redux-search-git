@@ -4,7 +4,8 @@ import {
   setTotalPage,
   setCurrentPage,
   setLoadingTrue,
-  setLoadingFalse
+  setLoadingFalse,
+  setFavorites
 } from "./actions";
 
 export const getData = (query) => {
@@ -50,3 +51,12 @@ export const getDataOnBtn = (query, page) => {
     dispatch(setLoadingFalse());
   };
 };
+
+export const getDataFromLocalStorage = () => {
+  return async (dispatch) => {
+    let data = JSON.parse(localStorage.getItem('repo'))
+    if(data !== null){
+      dispatch(setFavorites(data))
+    }
+  }
+}

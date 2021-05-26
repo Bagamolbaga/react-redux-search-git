@@ -8,8 +8,8 @@ import MyTable from '../components/Table'
 import Favorites from '../components/Favorites'
 
 const Result = () => {
-  let {getDataFromGitHubOnBtnPage, favorites, pages} = useContext(Context)
-  let {data, inputValue, currentPage, isLoading} = useSelector(state => state)
+  let {getDataFromGitHubOnBtnPage, pages} = useContext(Context)
+  let {data, inputValue, currentPage, isLoading, favorites} = useSelector(state => state)
   
 
 

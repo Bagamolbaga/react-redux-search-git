@@ -3,7 +3,7 @@ import {Context} from './context'
 import API from './axios.api'
 //REDUX
 import {useSelector, useDispatch} from 'react-redux'
-import {getData, getDataOnBtn} from './redux/getAsyncData'
+import {getData, getDataOnBtn, getDataFromLocalStorage} from './redux/getAsyncData'
 //REDUX
 
 import Home from './pages/Home';
@@ -30,7 +30,6 @@ export default function App() {
   let [favorites, setFavorites] = useState([])
 
 
-  let [isLoading, setIsLoading] = useState(false)
 
   
   let pages = []
@@ -55,15 +54,13 @@ export default function App() {
   }
   createPages(pages, pagesCount, currentPage)
 
-  // useEffect(()=>{
-  //   if(JSON.parse(localStorage.getItem('repo')) !== null){
-  //     setFavorites(JSON.parse(localStorage.getItem('repo')))
-  //   }
-  // },[])
-
   useEffect(()=>{
-    localStorage.setItem('repo', JSON.stringify(favorites))
-  },[favorites])
+    dispatch(getDataFromLocalStorage())
+  },[])
+
+  // useEffect(()=>{
+  //   localStorage.setItem('repo', JSON.stringify(favorites))
+  // },[favorites])
 
   
 

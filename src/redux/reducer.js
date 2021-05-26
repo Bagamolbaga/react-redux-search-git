@@ -58,9 +58,27 @@ export const reducer = (state = initialState, action) => {
       }
 
     case SET_FAVORITES:
+      let fav = state.favorites
       return{
         ...state,
-        favorites: [...action.payload]
+        favorites: fav.concat(action.payload)
+      }
+
+    case ADD_FAVORITES:
+      let favorit = state.favorites
+      favorit = [...favorit, ...[action.payload]]
+      localStorage.setItem('repo', JSON.stringify(favorit))
+      return{
+        ...state,
+        favorites: favorit
+      }
+
+    case DELETE_FAVORITES:
+      let newFav = state.favorites.filter(item => item.fullName !== action.payload)
+      localStorage.setItem('repo', JSON.stringify(newFav))
+      return{
+        ...state,
+        favorites: newFav
       }
   
     default:
