@@ -12,8 +12,8 @@ const Result = () => {
     <>
         <Search />
         
-        {isLoading ? <p>Loading...</p> : <MyTable data={data}/>}
-        {data.length !== 0 && pages.map((page, i) => (<button className={currentPage === page && 'current-page'} onClick={() => btnPageHandler(page)} key={i}>{page}</button>) )}
+        {isLoading ? <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> : <MyTable data={data}/>}
+        {data.length !== 0 && pages.map((page, i) => (<button className={currentPage === page ? 'btn-page_current' : 'btn-page'} onClick={() => btnPageHandler(page)} key={i}>{page}</button>) )}
     
         <Favorites data={favorites}/>
     </>

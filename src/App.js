@@ -25,7 +25,9 @@ export default function App() {
   let pages = []
 
   useEffect(()=>{
-    setFavorites(JSON.parse(localStorage.getItem('repo')))
+    if(JSON.parse(localStorage.getItem('repo')) !== null){
+      setFavorites(JSON.parse(localStorage.getItem('repo')))
+    }
   },[])
 
   useEffect(()=>{
@@ -119,7 +121,7 @@ export default function App() {
         favorites
       }}
     >
-      <div className="App" style={{width: '1000px', margin: '0 auto'}}>
+      <div className="App">
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={Home} />
