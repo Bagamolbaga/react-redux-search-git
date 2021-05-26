@@ -27,7 +27,7 @@ const MyTable = ({data, favorites}) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map((row) => (
+              {!!data && data.map((row) => (
                 <TableRow key={row.fullName}>
                   <TableCell component="th" scope="row">
                     {row.fullName}
@@ -58,7 +58,7 @@ const MyTable = ({data, favorites}) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map((row) => (
+              {!!data && data.map((row) => (
                 <TableRow key={row.fullName}>
                   <TableCell component="th" scope="row">
                     {row.fullName}

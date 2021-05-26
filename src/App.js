@@ -3,7 +3,7 @@ import {Context} from './context'
 import API from './axios.api'
 //REDUX
 import {useSelector, useDispatch} from 'react-redux'
-import {getData} from './redux/getAsyncData'
+import {getData, getDataOnBtn} from './redux/getAsyncData'
 //REDUX
 
 import Home from './pages/Home';
@@ -15,80 +15,25 @@ import "./styles.css";
 
 export default function App() {
   let dispatch = useDispatch()
-  let inputValue = useSelector(state => state.inputValue)
-  console.log(inputValue)
+  let {pagesCount, currentPage} = useSelector(state => state)
 
   let getDataFromGitHub = (query) => {
     dispatch(getData(query))
   }
 
-  // useEffect(()=>{
-  //   dispatch(getData('react'))
-  // },[])
+  let getDataFromGitHubOnBtnPage = (query, page) => {
+    dispatch(getDataOnBtn(query, page))
+  }
 
-  let [data, setData] = useState([])
+
 
   let [favorites, setFavorites] = useState([])
 
-  let [inputVal, setInputVal] = useState('')
 
   let [isLoading, setIsLoading] = useState(false)
 
-  let [totalPages, setTotalPages] = useState(1)   //Всего страниц
-  let [currentPage, setCurrentPage] = useState(1) //текущая страница
-  let perPage = 10                                //елементов на странице
-  let pages = []
-
-  // useEffect(()=>{
-  //   if(JSON.parse(localStorage.getItem('repo')) !== null){
-  //     setFavorites(JSON.parse(localStorage.getItem('repo')))
-  //   }
-  // },[])
-
-  useEffect(()=>{
-    localStorage.setItem('repo', JSON.stringify(favorites))
-  },[favorites])
-
-  let searchBtnHandler = async () => {
-    setIsLoading(true)
-    let res = await API.get(`/search/repositories?q=${inputVal}&per_page=${perPage}`)
-    let resDestr = res.data.items
-    let obj = resDestr.map(item => {
-      return {
-        fullName: item.full_name,
-        author: item.owner.login,
-        stars: item.stargazers_count,
-        link: item.html_url
-      }
-    })
-    setTotalPages(Math.ceil(res.data.total_count / perPage))
-    setData(obj)
-    setIsLoading(false)
-
-    //dispatch(getFetchData(obj))
-  }
-
-  let inputHandler = (e) => {
-    setInputVal(e.target.value)
-  }
-
-  let btnPageHandler = async (page) => {
-    setIsLoading(true)
-    setCurrentPage(page)
-    let res = await API.get(`/search/repositories?q=${inputVal}&per_page=${perPage}&page=${page}`)
-    let resDestr = res.data.items
-    let obj = resDestr.map(item => {
-      return {
-        fullName: item.full_name,
-        author: item.owner.login,
-        stars: item.stargazers_count,
-        link: item.html_url
-      }
-    })
-    setData(obj)
-    setIsLoading(false)
-  }
   
+  let pages = []
   let createPages = (pages, totalPages, currentPage) => {
     if(totalPages > 10){
       if(currentPage > 5){
@@ -108,8 +53,41 @@ export default function App() {
       }
     }
   }
+  createPages(pages, pagesCount, currentPage)
 
-  createPages(pages, totalPages, currentPage)
+  // useEffect(()=>{
+  //   if(JSON.parse(localStorage.getItem('repo')) !== null){
+  //     setFavorites(JSON.parse(localStorage.getItem('repo')))
+  //   }
+  // },[])
+
+  useEffect(()=>{
+    localStorage.setItem('repo', JSON.stringify(favorites))
+  },[favorites])
+
+  
+
+  
+
+  let btnPageHandler = async (page) => {
+    setIsLoading(true)
+    setCurrentPage(page)
+    let res = await API.get(`/search/repositories?q=${inputVal}&per_page=${perPage}&page=${page}`)
+    let resDestr = res.data.items
+    let obj = resDestr.map(item => {
+      return {
+        fullName: item.full_name,
+        author: item.owner.login,
+        stars: item.stargazers_count,
+        link: item.html_url
+      }
+    })
+    setData(obj)
+    setIsLoading(false)
+  }
+  
+  
+
 
   let addFavoriteHandler = (row) => {
     setFavorites([...favorites, row])
@@ -124,23 +102,17 @@ export default function App() {
   return (
     <Context.Provider
       value={{
-        data,
-        setData,
-        inputVal,
-        isLoading,
-        setInputVal,
-        searchBtnHandler,
-        //inputHandler,
+        
         pages,
         btnPageHandler,
         currentPage,
-        setCurrentPage,
         addFavoriteHandler,
         deleteFavoriteHandler,
         favorites,
 
 
-        getDataFromGitHub
+        getDataFromGitHub,
+        getDataFromGitHubOnBtnPage
       }}
     >
       

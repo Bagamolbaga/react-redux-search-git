@@ -10,7 +10,6 @@ import {changeInputValue} from '../redux/actions'
 const Search = () => {
   let inputValue = useSelector(state => state.inputValue)
   let dispatch = useDispatch()
-  //console.log(state)
 
   let {getDataFromGitHub} = useContext(Context)
 
