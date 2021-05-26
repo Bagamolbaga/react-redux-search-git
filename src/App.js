@@ -1,6 +1,10 @@
 import {useState, useEffect} from 'react'
 import {Context} from './context'
 import API from './axios.api'
+//REDUX
+import {useSelector, useDispatch} from 'react-redux'
+import {getData} from './redux/getAsyncData'
+//REDUX
 
 import Home from './pages/Home';
 import Result from './pages/Result'
@@ -10,6 +14,17 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import "./styles.css";
 
 export default function App() {
+  let dispatch = useDispatch()
+  let inputValue = useSelector(state => state.inputValue)
+  console.log(inputValue)
+
+  let getDataFromGitHub = (query) => {
+    dispatch(getData(query))
+  }
+
+  // useEffect(()=>{
+  //   dispatch(getData('react'))
+  // },[])
 
   let [data, setData] = useState([])
 
@@ -24,11 +39,11 @@ export default function App() {
   let perPage = 10                                //елементов на странице
   let pages = []
 
-  useEffect(()=>{
-    if(JSON.parse(localStorage.getItem('repo')) !== null){
-      setFavorites(JSON.parse(localStorage.getItem('repo')))
-    }
-  },[])
+  // useEffect(()=>{
+  //   if(JSON.parse(localStorage.getItem('repo')) !== null){
+  //     setFavorites(JSON.parse(localStorage.getItem('repo')))
+  //   }
+  // },[])
 
   useEffect(()=>{
     localStorage.setItem('repo', JSON.stringify(favorites))
@@ -49,6 +64,8 @@ export default function App() {
     setTotalPages(Math.ceil(res.data.total_count / perPage))
     setData(obj)
     setIsLoading(false)
+
+    //dispatch(getFetchData(obj))
   }
 
   let inputHandler = (e) => {
@@ -102,6 +119,8 @@ export default function App() {
     setFavorites(favorites.filter(item => item.fullName !== fullName))
   }
 
+  
+
   return (
     <Context.Provider
       value={{
@@ -111,24 +130,28 @@ export default function App() {
         isLoading,
         setInputVal,
         searchBtnHandler,
-        inputHandler,
+        //inputHandler,
         pages,
         btnPageHandler,
         currentPage,
         setCurrentPage,
         addFavoriteHandler,
         deleteFavoriteHandler,
-        favorites
+        favorites,
+
+
+        getDataFromGitHub
       }}
     >
-      <div className="App">
-        <BrowserRouter>
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/result/:q" component={Result} />
-          </Switch>
-        </BrowserRouter>
-      </div>
+      
+        <div className="App">
+          <BrowserRouter>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route path="/result/:q" component={Result} />
+            </Switch>
+          </BrowserRouter>
+        </div>
     </Context.Provider>
   );
 }

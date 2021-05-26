@@ -13,7 +13,7 @@ const Result = () => {
     <>
         <Search />
         
-        {isLoading ? <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> : <MyTable data={data}/>}
+        {isLoading ? <div className="lds-ellipsis"><div></div><div></div><div></div><div></div></div> : <MyTable data={data}/>}
         
         {!isLoading & data.length !== 0 ? pages.map((page, i) => (<button className={currentPage === page ? 'btn-page_current' : 'btn-page'} onClick={() => btnPageHandler(page)} key={i}>{page}</button>)): ''}
     
