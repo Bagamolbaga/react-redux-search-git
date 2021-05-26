@@ -13,6 +13,8 @@ export default function App() {
 
   let [data, setData] = useState([])
 
+  let [favorites, setFavorites] = useState([])
+
   let [inputVal, setInputVal] = useState('')
 
   let [isLoading, setIsLoading] = useState(false)
@@ -22,7 +24,13 @@ export default function App() {
   let perPage = 10                                //елементов на странице
   let pages = []
 
+  useEffect(()=>{
+    setFavorites(JSON.parse(localStorage.getItem('repo')))
+  },[])
 
+  useEffect(()=>{
+    localStorage.setItem('repo', JSON.stringify(favorites))
+  },[favorites])
 
   let searchBtnHandler = async () => {
     setIsLoading(true)
@@ -84,6 +92,13 @@ export default function App() {
 
   createPages(pages, totalPages, currentPage)
 
+  let addFavoriteHandler = (row) => {
+    setFavorites([...favorites, row])
+  }
+
+  let deleteFavoriteHandler = (fullName) => {
+    setFavorites(favorites.filter(item => item.fullName !== fullName))
+  }
 
   return (
     <Context.Provider
@@ -98,7 +113,10 @@ export default function App() {
         pages,
         btnPageHandler,
         currentPage,
-        setCurrentPage
+        setCurrentPage,
+        addFavoriteHandler,
+        deleteFavoriteHandler,
+        favorites
       }}
     >
       <div className="App" style={{width: '1000px', margin: '0 auto'}}>

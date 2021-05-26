@@ -3,9 +3,10 @@ import {Context} from '../context'
 
 import Search from '../components/Search'
 import MyTable from '../components/Table'
+import Favorites from '../components/Favorites'
 
 const Result = () => {
-  let {data, isLoading, pages, btnPageHandler, currentPage} = useContext(Context)
+  let {data, favorites, isLoading, pages, btnPageHandler, currentPage} = useContext(Context)
  
   return (
     <>
@@ -13,6 +14,8 @@ const Result = () => {
         
         {isLoading ? <p>Loading...</p> : <MyTable data={data}/>}
         {data.length !== 0 && pages.map((page, i) => (<button className={currentPage === page && 'current-page'} onClick={() => btnPageHandler(page)} key={i}>{page}</button>) )}
+    
+        <Favorites data={favorites}/>
     </>
   )
 }
