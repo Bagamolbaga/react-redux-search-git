@@ -1,4 +1,4 @@
-import { useEffect} from 'react'
+import {useEffect} from 'react'
 import {Context} from './context'
 //REDUX
 import {useSelector, useDispatch} from 'react-redux'
@@ -26,6 +26,7 @@ export default function App() {
 
   
   let pages = []
+  pagesCount = Math.ceil(pagesCount / 10)
   let createPages = (pages, totalPages, currentPage) => {
     if(totalPages > 10){
       if(currentPage > 5){
