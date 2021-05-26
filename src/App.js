@@ -1,6 +1,5 @@
-import {useState, useEffect} from 'react'
+import { useEffect} from 'react'
 import {Context} from './context'
-import API from './axios.api'
 //REDUX
 import {useSelector, useDispatch} from 'react-redux'
 import {getData, getDataOnBtn, getDataFromLocalStorage} from './redux/getAsyncData'
@@ -9,7 +8,7 @@ import {getData, getDataOnBtn, getDataFromLocalStorage} from './redux/getAsyncDa
 import Home from './pages/Home';
 import Result from './pages/Result'
 
-import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import {BrowserRouter, Route, Switch, useLocation} from 'react-router-dom'
 
 import "./styles.css";
 
@@ -24,12 +23,6 @@ export default function App() {
   let getDataFromGitHubOnBtnPage = (query, page) => {
     dispatch(getDataOnBtn(query, page))
   }
-
-
-
-  let [favorites, setFavorites] = useState([])
-
-
 
   
   let pages = []
@@ -65,35 +58,15 @@ export default function App() {
   
 
   
-
-  let btnPageHandler = async (page) => {
-    setIsLoading(true)
-    setCurrentPage(page)
-    let res = await API.get(`/search/repositories?q=${inputVal}&per_page=${perPage}&page=${page}`)
-    let resDestr = res.data.items
-    let obj = resDestr.map(item => {
-      return {
-        fullName: item.full_name,
-        author: item.owner.login,
-        stars: item.stargazers_count,
-        link: item.html_url
-      }
-    })
-    setData(obj)
-    setIsLoading(false)
-  }
-  
   
 
 
-  let addFavoriteHandler = (row) => {
-    setFavorites([...favorites, row])
+  
+  function useQuery() {
+    return new URLSearchParams(useLocation().search);
   }
 
-  let deleteFavoriteHandler = (fullName) => {
-    setFavorites(favorites.filter(item => item.fullName !== fullName))
-  }
-
+ 
   
 
   return (
@@ -101,12 +74,9 @@ export default function App() {
       value={{
         
         pages,
-        btnPageHandler,
         currentPage,
-        addFavoriteHandler,
-        deleteFavoriteHandler,
-        favorites,
 
+        useQuery,
 
         getDataFromGitHub,
         getDataFromGitHubOnBtnPage
@@ -117,7 +87,7 @@ export default function App() {
           <BrowserRouter>
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route path="/result/:q" component={Result} />
+              <Route path="/result" component={Result} />
             </Switch>
           </BrowserRouter>
         </div>

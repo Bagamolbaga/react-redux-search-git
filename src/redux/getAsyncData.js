@@ -47,6 +47,7 @@ export const getDataOnBtn = (query, page) => {
     });
 
     dispatch(setData(obj));
+    dispatch(setTotalPage(res.data.total_count));
     dispatch(setCurrentPage(page));
     dispatch(setLoadingFalse());
   };
