@@ -8,12 +8,12 @@ import {changeInputValue} from '../redux/actions'
 
 
 const Search = () => {
-  let {inputValue, currentPage} = useSelector(state => state)
+  let {inputValue} = useSelector(state => state)
   let dispatch = useDispatch()
 
   let {getDataFromGitHub} = useContext(Context)
 
-  let routeTo = `/result?q=${inputValue}&page=${currentPage}`
+  let routeTo = `/result?q=${inputValue}&page=1`
 
   return (
     <div className='search-container'>

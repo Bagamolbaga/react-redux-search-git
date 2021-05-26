@@ -48,6 +48,10 @@
   color: #3f51b5;
 }
 
+.table-head_tittle{
+  font-weight: 600;
+}
+
 /* LOADER */
 
 .lds-ellipsis {

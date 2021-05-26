@@ -20,14 +20,10 @@ const Result = () => {
   useEffect(()=>{
     let q = query.get('q')
     let page = +query.get('page')
-console.log(q, page)
     dispatch(changeInputValue(q))
     dispatch(getDataOnBtn(q, page))
-
-    //if(page)
   },[])
 
-  let routeTo = `/result?q=${inputValue}&page=${currentPage}`
 
 
   return (
@@ -36,7 +32,7 @@ console.log(q, page)
         
         {isLoading ? <div className="lds-ellipsis"><div></div><div></div><div></div><div></div></div> : <MyTable data={data}/>}
         
-        {!isLoading & data.length !== 0 ? pages.map((page, i) => (<Link to={`/result?q=${inputValue}&page=${page}`}><button className={currentPage === page ? 'btn-page_current' : 'btn-page'} onClick={() => getDataFromGitHubOnBtnPage(inputValue, page)} key={i}>{page}</button></Link>)): ''}
+        {!isLoading & data.length !== 0 ? pages.map((page) => (<Link key={page} to={`/result?q=${inputValue}&page=${page}`}><button className={currentPage === page ? 'btn-page_current' : 'btn-page'} onClick={() => getDataFromGitHubOnBtnPage(inputValue, page)}>{page}</button></Link>)): ''}
     
         <Favorites data={favorites}/>
     </>

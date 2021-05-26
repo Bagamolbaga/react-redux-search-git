@@ -25,6 +25,7 @@ export const getData = (query) => {
 
     dispatch(setData(obj));
     dispatch(setTotalPage(res.data.total_count));
+    dispatch(setCurrentPage(1));
     dispatch(setLoadingFalse());
   };
 };
