@@ -19,7 +19,7 @@ export default function App() {
 
   let [isLoading, setIsLoading] = useState(false)
 
-  let [totalPages, setTotalPages] = useState(1)   //всего страниц
+  let [totalPages, setTotalPages] = useState(1)   //Всего страниц
   let [currentPage, setCurrentPage] = useState(1) //текущая страница
   let perPage = 10                                //елементов на странице
   let pages = []
