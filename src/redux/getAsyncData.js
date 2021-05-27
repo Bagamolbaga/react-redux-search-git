@@ -11,7 +11,6 @@ export const getData = (query) => {
   return async (dispatch) => {
     dispatch(setLoading(true));
 
-    if(!query & query === ' ') {query = 'react-redux-search-git'}
     let res = await API.get(`/search/repositories?q=${query}&per_page=10`);
     let resDestr = res.data.items;
     let obj = resDestr.map((item) => {
@@ -34,7 +33,6 @@ export const getDataOnBtn = (query, page) => {
   return async (dispatch) => {
     dispatch(setLoading(true));
 
-    if(!query & query === ' ') {query = 'react-redux-search-git'}
     let res = await API.get(
       `/search/repositories?q=${query}&per_page=10&page=${page}`
     );
