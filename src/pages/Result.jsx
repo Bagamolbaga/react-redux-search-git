@@ -21,6 +21,10 @@ const Result = () => {
   useEffect(()=>{
     let q = query.get('q')
     let page = +query.get('page')
+    if(!q || q === '' || q === ' '){
+      q = 'baga'
+      history.push(`/result?q=${q}&page=${page}`)
+    }
     if(page < 1){
       page = 1
       history.push(`/result?q=${q}&page=1`)
