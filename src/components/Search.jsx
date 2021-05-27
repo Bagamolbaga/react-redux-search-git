@@ -19,7 +19,7 @@ const Search = () => {
   return (
     <div className='search-container'>
       <TextField onChange={e => dispatch(changeInputValue(e.target.value))} value={inputValue} fullWidth id="standard-basic" label="Name repo" />
-      <Button disabled={!inputValue} onClick={() => getDataFromGitHub(inputValue)} variant="contained" color="primary">
+      <Button disabled={!inputValue || !inputValue.trim()} onClick={() => getDataFromGitHub(inputValue)} variant="contained" color="primary">
         <Link to={routeTo} className='search'>Search</Link>
       </Button>
     </div>

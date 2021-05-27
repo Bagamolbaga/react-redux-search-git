@@ -12,7 +12,7 @@ import Favorites from '../components/Favorites'
 
 const Result = () => {
   let {getDataFromGitHubOnBtnPage, pages,  useQuery} = useContext(Context)
-  let {data, inputValue, currentPage, pagesCount, isLoading, favorites} = useSelector(state => state)
+  let {data, inputValue, currentPage, isLoading, favorites} = useSelector(state => state)
   let dispatch = useDispatch()
   let history = useHistory()
   
