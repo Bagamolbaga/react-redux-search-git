@@ -3,15 +3,15 @@ import {
   setData,
   setTotalPage,
   setCurrentPage,
-  setLoadingTrue,
-  setLoadingFalse,
+  setLoading,
   setFavorites
 } from "./actions";
 
 export const getData = (query) => {
   return async (dispatch) => {
-    dispatch(setLoadingTrue());
-    
+    dispatch(setLoading(true));
+
+    if(!query & query === ' ') {query = 'react-redux-search-git'}
     let res = await API.get(`/search/repositories?q=${query}&per_page=10`);
     let resDestr = res.data.items;
     let obj = resDestr.map((item) => {
@@ -26,14 +26,15 @@ export const getData = (query) => {
     dispatch(setData(obj));
     dispatch(setTotalPage(res.data.total_count));
     dispatch(setCurrentPage(1));
-    dispatch(setLoadingFalse());
+    dispatch(setLoading(false));
   };
 };
 
 export const getDataOnBtn = (query, page) => {
   return async (dispatch) => {
-    dispatch(setLoadingTrue());
+    dispatch(setLoading(true));
 
+    if(!query & query === ' ') {query = 'react-redux-search-git'}
     let res = await API.get(
       `/search/repositories?q=${query}&per_page=10&page=${page}`
     );
@@ -50,7 +51,7 @@ export const getDataOnBtn = (query, page) => {
     dispatch(setData(obj));
     dispatch(setTotalPage(res.data.total_count));
     dispatch(setCurrentPage(page));
-    dispatch(setLoadingFalse());
+    dispatch(setLoading(false));
   };
 };
 

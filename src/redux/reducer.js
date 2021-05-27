@@ -3,8 +3,7 @@ import {
   ADD_FETCH_DATA, 
   SET_TOTAL_PAGES,
   SET_CURRENT_PAGE,
-  SET_LOADING_TRUE,
-  SET_LOADING_FALSE,
+  SET_LOADING,
   SET_FAVORITES,
   ADD_FAVORITES,
   DELETE_FAVORITES
@@ -45,13 +44,7 @@ export const reducer = (state = initialState, action) => {
         currentPage: action.payload
       }
 
-    case SET_LOADING_TRUE:
-      return{
-        ...state,
-        isLoading: action.payload
-      }
-
-    case SET_LOADING_FALSE:
+    case SET_LOADING:
       return{
         ...state,
         isLoading: action.payload

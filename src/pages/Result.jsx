@@ -1,6 +1,6 @@
 import {useContext, useEffect} from 'react'
 import {Context} from '../context'
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 
 import {useSelector, useDispatch} from 'react-redux'
 import {getDataOnBtn} from '../redux/getAsyncData'
@@ -12,14 +12,19 @@ import Favorites from '../components/Favorites'
 
 const Result = () => {
   let {getDataFromGitHubOnBtnPage, pages,  useQuery} = useContext(Context)
-  let {data, inputValue, currentPage, isLoading, favorites} = useSelector(state => state)
+  let {data, inputValue, currentPage, pagesCount, isLoading, favorites} = useSelector(state => state)
   let dispatch = useDispatch()
+  let history = useHistory()
   
   let query = useQuery();
 
   useEffect(()=>{
     let q = query.get('q')
     let page = +query.get('page')
+    if(page < 1){
+      page = 1
+      history.push(`/result?q=${q}&page=1`)
+    } 
     dispatch(changeInputValue(q))
     dispatch(getDataOnBtn(q, page))
   },[])

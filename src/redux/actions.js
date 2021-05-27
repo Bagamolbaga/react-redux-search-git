@@ -3,8 +3,7 @@ export const ADD_FETCH_DATA = 'ADD_FETCH_DATA'
 export const SET_TOTAL_PAGES = 'SET_TOTAL_PAGES'
 export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 
-export const SET_LOADING_TRUE = 'SET_LOADING_TRUE'
-export const SET_LOADING_FALSE = 'SET_LOADING_FALSE'
+export const SET_LOADING = 'SET_LOADING'
 
 export const SET_FAVORITES = 'SET_FAVORITES'
 export const ADD_FAVORITES = 'ADD_FAVORITES'
@@ -40,17 +39,10 @@ export const setCurrentPage = (page) => {
   }
 }
 
-export const setLoadingTrue = () => {
+export const setLoading = (value) => {
   return {
-    type: SET_LOADING_TRUE,
-    payload: true
-  }
-}
-
-export const setLoadingFalse = () => {
-  return {
-    type: SET_LOADING_FALSE,
-    payload: false
+    type: SET_LOADING,
+    payload: value
   }
 }
 
