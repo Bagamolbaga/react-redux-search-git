@@ -16,6 +16,10 @@ export default function App() {
   let dispatch = useDispatch()
   let {pagesCount, currentPage} = useSelector(state => state)
 
+  useEffect(()=>{
+    dispatch(getDataFromLocalStorage())
+  },[])
+
   let getDataFromGitHub = (query) => {
     dispatch(getData(query))
   }
@@ -27,6 +31,7 @@ export default function App() {
   
   let pages = []
   pagesCount = Math.ceil(pagesCount / 10)
+
   let createPages = (pages, totalPages, currentPage) => {
     if(totalPages > 10){
       if(currentPage > 5){
@@ -46,24 +51,10 @@ export default function App() {
       }
     }
   }
+
   createPages(pages, pagesCount, currentPage)
 
-  useEffect(()=>{
-    dispatch(getDataFromLocalStorage())
-  },[])
-
-  // useEffect(()=>{
-  //   localStorage.setItem('repo', JSON.stringify(favorites))
-  // },[favorites])
-
-  
-
-  
-  
-
-
-  
-  function useQuery() {
+  let useQuery = () => {
     return new URLSearchParams(useLocation().search);
   }
 
@@ -73,17 +64,11 @@ export default function App() {
   return (
     <Context.Provider
       value={{
-        
         pages,
-        currentPage,
-
         useQuery,
-
         getDataFromGitHub,
         getDataFromGitHubOnBtnPage
-      }}
-    >
-      
+      }}>
         <div className="App">
           <BrowserRouter>
             <Switch>
